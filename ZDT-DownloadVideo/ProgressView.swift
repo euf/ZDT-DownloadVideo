@@ -20,7 +20,7 @@ class ProgressView: UIView {
     private var dashedLayer: CAShapeLayer = CAShapeLayer()
     
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
         setupView()
     }
     
@@ -41,7 +41,13 @@ class ProgressView: UIView {
         progressLabel.textAlignment = .Center
         progressLabel.text = "0 %"
         progressLabel.font = UIFont(name: "HelveticaNeue-UltraLight", size: 40.0)
-        progressLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        if #available(iOS 9, *) {
+            progressLabel.translatesAutoresizingMaskIntoConstraints = false
+        } else {
+//            progressLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        }
+        
         addSubview(progressLabel)
         // add constraints
         addConstraint(NSLayoutConstraint(item: self, attribute: .CenterX, relatedBy: .Equal, toItem: progressLabel, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
@@ -53,7 +59,13 @@ class ProgressView: UIView {
         sizeProgressLabel.textAlignment = .Center
         sizeProgressLabel.text = "0.0 MB / 0.0 MB"
         sizeProgressLabel.font = UIFont(name: "HelveticaNeue-Light", size: 10.0)
-        sizeProgressLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+
+        if #available(iOS 9, *) {
+            sizeProgressLabel.translatesAutoresizingMaskIntoConstraints = false
+        } else {
+//            sizeProgressLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        }
+        
         addSubview(sizeProgressLabel)
         // add constraints
         addConstraint(NSLayoutConstraint(item: self, attribute: .CenterX, relatedBy: .Equal, toItem: sizeProgressLabel, attribute: .CenterX, multiplier: 1.0, constant: 0.0))
@@ -74,7 +86,7 @@ class ProgressView: UIView {
         progressLayer.strokeEnd = 0.0
         layer.addSublayer(progressLayer)
         
-        var dashedLayer = CAShapeLayer()
+        let dashedLayer = CAShapeLayer()
         dashedLayer.strokeColor = UIColor(white: 1.0, alpha: 0.5).CGColor
         dashedLayer.fillColor = nil
         dashedLayer.lineDashPattern = [2, 4]
@@ -111,7 +123,7 @@ class ProgressView: UIView {
         progressLayer.removeAllAnimations()
     }
     
-    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         hideProgressView()
     }
 }
