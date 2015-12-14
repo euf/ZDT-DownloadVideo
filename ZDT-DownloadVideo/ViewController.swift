@@ -51,7 +51,7 @@ class ViewController: UIViewController, NSURLSessionDownloadDelegate {
     }
     
     func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-        if let error = error {
+        if let _ = error {
             statusLabel.text = "Download failed"
         } else {
             statusLabel.text = "Download finished"
